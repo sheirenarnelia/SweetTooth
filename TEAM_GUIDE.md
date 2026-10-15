@@ -31,57 +31,136 @@ Tujuan tugas ini murni **DevOps, Packaging, Reproducibility, dan Handover Verifi
 
 > 💡 **Catatan untuk Git:** Setiap anggota **WAJIB** melakukan commit atau Pull Request menggunakan akun GitHub masing-masing agar kontribusi tercatat di GitHub Insights.
 
-| Anggota | Peran / Jabatan | Tugas Utama & Deliverable | Konsep untuk Tabel 5.1 |
-| :--- | :--- | :--- | :--- |
-| **Sheiren (Aku)** | **DevOps & Image Architect** | • Analisis runtime (Step 3)<br>• Menulis `Dockerfile` (Nginx Alpine)<br>• Build & tagging Docker image (Step 6)<br>• Branching strategy `chore/dockerize-project` | Base image selection, Docker build context, layer caching, expose port. |
-| **Nisa** | **Orchestration & Config Engineer** | • Menulis `.dockerignore` & `.env.example` (Step 5)<br>• Menulis file `compose.yaml` (Step 7)<br>• Menguji lifecycle container (`compose up`, `ps`, `logs`, `down`) | Container orchestration, port forwarding (host vs container), environment variables. |
-| **Serina** | **QA & Verification Lead** | • Dokumentasi baseline lokal sebelum Docker (Step 1)<br>• Menjalankan pengujian fungsional V-01 s/d V-04 (Step 9)<br>• Mengambil screenshot bukti eksekusi untuk Section D, E, F laporan | Container healthcheck, verification matrix, runtime inspection (`docker ps`, `curl`). |
-| **James** | **Handover & PR Coordinator** | • Koordinasi Handover Test ke **kelompok lain** (Step 11)<br>• Mencatat hasil form Handover Record (Section G)<br>• Mengelola Pull Request, peer review, merge ke `main`, & release tag `week6-docker-v1` | Handover reproducibility, Git PR workflow, semantic versioning & release tagging. |
-| **Areta** | **Documentation & Video Producer** | • Memastikan `README.md` lengkap & rapi (Step 10)<br>• Menulis & memimpin video demonstrasi (maks 20 menit)<br>• Mengompilasi PDF Laporan Bukti (Section A–I) & paket ZIP | Developer experience (DevEx), handover runbooks, troubleshooting synthesis. |
+| Anggota | Peran / Jabatan | Langkah Kerja Praktis (Step-by-Step) | Deliverable / Bukti | Konsep Laporan (Tabel 5.1) | Status |
+| :--- | :--- | :--- | :--- | :--- | :-: |
+| **Sheiren** | **DevOps & Image Architect** | **1.** Buka Docker Desktop di Mac<br>**2.** Jalankan `docker build -t sweettooth/web:week6 .`<br>**3.** Simpan screenshot terminal build sukses<br>**4.** Selesaikan invite 4 teman di GitHub | • `Dockerfile`<br>• Screenshot Build (Bab D) | Base image selection, Docker context, layer caching, expose port | ⏳ **Sedang Jalan** |
+| **Nisa** | **Orchestration Engineer** | **1.** Clone repo di laptop Nisa<br>**2.** Jalankan `docker compose up --build -d`<br>**3.** Pastikan container jalan di port 8080<br>**4.** Push commit file compose & env | • `compose.yaml`<br>• `.dockerignore`<br>• `.env.example` | Container orchestration, port forwarding, environment variables | ⏸️ Antre (stlh Sheiren) |
+| **Serina** | **QA & Verification Lead** | **1.** Buka browser `http://localhost:8080`<br>**2.** Tes klik menu kue & tambah ke keranjang<br>**3.** Ambil screenshot web jalan & add to cart<br>**4.** Buat & push file `VERIFICATION.md` | • `VERIFICATION.md`<br>• Screenshot Uji (Bab F) | Container healthcheck, verification matrix, runtime inspection | ⏸️ Antre (stlh Nisa) |
+| **Areta** | **Docs & Video Producer** | **1.** Rapikan panduan instalasi di `README.md`<br>**2.** Pimpin rekaman video demo (maks 20 mnt)<br>**3.** Sematkan link video ke `README.md` & push<br>**4.** Susun laporan PDF (Bab A–I) & cetak fisik | • `README.md`<br>• Link Video Demo<br>• File PDF Laporan | Developer experience (DevEx), handover runbooks, troubleshooting | ⏸️ Antre (stlh Serina) |
+| **James** | **Handover & PR Coordinator** | **1.** Buat Pull Request di GitHub<br>**2.** Minta 1 teman kelompok lain tes web kita<br>**3.** Catat hasil uji di `HANDOVER_LOG.md` & push<br>**4.** Klik Merge PR & buat tag `week6-docker-v1` | • PR Merged di GitHub<br>• `HANDOVER_LOG.md`<br>• Tag `week6-docker-v1` | Handover reproducibility, Git PR workflow, release tagging | ⏸️ Antre (stlh Areta) |
 
 ---
 
-## 🎬 SKENARIO PRAKTIK NYATA (BACA INI DULU BIAR TIDAK BINGUNG!)
+## 🐙 PANDUAN DISTRIBUSI COMMIT GITHUB (AGAR TERCATAT DI GITHUB INSIGHTS)
 
-Inti tugas dari dosen sebenarnya adalah **"Uji Coba Serah Terima (Handover Test)"**:
-- **Kalian ber-5** adalah pembuat aplikasi.
-- **File `README.md`** adalah satu-satunya buku petunjuk bagi orang luar.
-- **Teman dari kelompok lain** bertindak sebagai orang awam yang disuruh menjalankan aplikasi Sweet Tooth di laptopnya **HANYA dengan membaca `README.md` tanpa bantuan langsung dari kalian**.
+> ⚠️ **PENTING DARI DOSEN (Tabel 5.1 & Bukti Kontribusi):**  
+> Dosen pengampu akan memeriksa menu **Insights > Contributors** dan riwayat commit di GitHub. Tugas ini **TIDAK BOLEH** hanya di-push oleh 1 orang. Kelima anggota harus memiliki commit / aktivitas Pull Request dari akun GitHub masing-masing!
 
-### Alur Kerja Praktis per Orang:
+### 🔑 Aturan Akses Repo (Invite vs Kirim Link):
+1. **Untuk 4 Teman Sekelompok (Nisa, Serina, James, Areta):**
+   - **WAJIB DI-INVITE** sebagai **Collaborator** di GitHub oleh Sheiren (Owner Repo).
+   - *Cara invite:* Buka repo GitHub > `Settings` > `Collaborators` > `Add people` > masukkan username GitHub mereka.
+   - Setelah mereka menerima invite via email/notifikasi GitHub, mereka bisa langsung `git clone` dan `git push` ke branch tugas.
+2. **Untuk Tester dari Kelompok Lain (Step 11 Handover):**
+   - **CUKUP KIRIM LINK REPO** (Tidak perlu di-invite karena repositori ini berstatus **Public**).
+   - Tester luar cukup melakukan `git clone` di laptopnya sendiri untuk membuktikan bahwa aplikasi bisa jalan murni dari petunjuk `README.md`.
 
-1. 👩‍💻 **Sheiren (Upload Kodingan):**
-   - Kodingan Docker (`Dockerfile`, `compose.yaml`, `.dockerignore`, `README.md`) sudah selesai dibuat dan sudah dites jalan normal.
-   - Sheiren tinggal buat branch baru dan push ke GitHub:
+---
+
+### 💻 DETAIL PERINTAH & FILE COMMIT SETIAP ANGGOTA
+
+Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file dan perintah Git untuk masing-masing anggota:
+
+#### 1. 👩‍💻 Sheiren — DevOps & Image Architect
+* **Status:** Inisialisasi awal repositori.
+* **Tugas:** Menyiapkan branch dan base `Dockerfile`.
+* **Perintah Git:**
+  ```bash
+  git checkout -b chore/dockerize-project
+  git add Dockerfile
+  git commit -m "feat(docker): setup multi-stage nginx alpine Dockerfile"
+  git push -u origin chore/dockerize-project
+  ```
+* **Hasil di GitHub:** Akun Sheiren tercatat sebagai pembuat branch dan arsitek image Docker.
+
+---
+
+#### 2. 👩‍💻 Nisa — Orchestration & Config Engineer
+* **Tugas:** Menyiapkan konfigurasi orkestrasi container dan variabel environment.
+* **File yang di-commit:** `.dockerignore`, `.env.example`, `compose.yaml`.
+* **Langkah di Laptop Nisa:**
+  1. Clone repo dan pindah ke branch tugas:
      ```bash
-     git checkout -b chore/dockerize-project
-     git add .
-     git commit -m "feat: setup docker configuration and readme"
-     git push -u origin chore/dockerize-project
+     git clone https://github.com/sheirenarnelia/SweetTooth.git
+     cd SweetTooth
+     git checkout chore/dockerize-project
      ```
+  2. Buka dan rapikan konfigurasi port/environment pada `compose.yaml` dan `.dockerignore`.
+  3. Lakukan commit dan push dari akun GitHub Nisa:
+     ```bash
+     git add compose.yaml .dockerignore .env.example
+     git commit -m "feat(orchestration): configure docker compose and environment variables"
+     git push origin chore/dockerize-project
+     ```
+* **Hasil di GitHub:** Akun Nisa tercatat di GitHub Insights mengelola file orkestrasi Docker.
 
-2. 👩‍💻 **Nisa (Buka Pull Request):**
-   - Buka GitHub repository di browser, klik tombol hijau **"Compare & pull request"**.
-   - Ajukan penggabungan dari branch `chore/dockerize-project` ke branch `main`.
+---
 
-3. 👩‍💻 **Serina (Verifikasi Internal & Screenshot):**
-   - Buka browser di `http://localhost:8085`.
-   - Coba klik menu kue dan klik tombol *Order Now* sampai masuk ke keranjang belanja.
-   - Ambil screenshot: Web berjalan, fitur keranjang belanja bertambah, dan terminal `docker compose ps` (kirim screenshot ke Areta).
+#### 3. 👩‍💻 Serina — QA & Verification Lead
+* **Tugas:** Menjalankan verifikasi fungsional container di laptopnya dan membuat dokumen checklist pengujian QA.
+* **File yang di-commit:** `VERIFICATION.md` (buat file baru di root folder berisi tabel hasil uji V-01 s/d V-04).
+* **Langkah di Laptop Serina:**
+  1. Pull branch terbaru:
+     ```bash
+     git checkout chore/dockerize-project
+     git pull origin chore/dockerize-project
+     ```
+  2. Jalankan container: `docker compose up --build -d`.
+  3. Uji di browser `http://localhost:8080`, cek fitur keranjang belanja & curl HTTP 200, lalu ambil screenshot untuk laporan Bab F.
+  4. Buat file `VERIFICATION.md` berisi tabel verifikasi fungsional dan spesifikasi runtime lokal.
+  5. Lakukan commit dan push dari akun GitHub Serina:
+     ```bash
+     git add VERIFICATION.md
+     git commit -m "docs(qa): add functional verification matrix and baseline results"
+     git push origin chore/dockerize-project
+     ```
+* **Hasil di GitHub:** Akun Serina tercatat di GitHub Insights sebagai penanggung jawab penjaminan mutu (QA).
 
-4. 👨‍💻 **James (Koordinator Uji Coba ke Kelompok Lain):**
-   - James menghubungi 1 orang teman sekelas dari kelompok lain (misal: Budi):
-     > *"Halo Bud, kelompok kita boleh minta tolong jadi tester handover gak? Kamu tinggal clone repo kita terus ikutin langkah di README.md, nanti gantian aku yang tes repo kelompokmu."*
-   - James kasih link repo GitHub ke Budi.
-   - Budi mencoba menjalankan di laptopnya sendiri tanpa dibantu.
-   - Setelah Budi sukses, Budi kirim 1 screenshot hasil web jalan di laptopnya ke James.
-   - James mencatat data Budi di laporan: nama penguji, sistem operasi laptopnya (Windows/Mac), dan konfirmasi bahwa build sukses.
-   - Budi memberi komentar "Approved / Verified" pada Pull Request di GitHub, lalu James klik **Merge PR** ke `main`.
+---
 
-5. 👩‍💻 **Areta (Video Demo & Laporan Akhir):**
-   - **Rekam video demo singkat (maks. 20 menit):** Rekam layar laptop saat menjalankan `docker compose up -d`, buka browser `http://localhost:8085`, coba klik fitur keranjang, lalu ketik `docker compose down`. Sebutkan bahwa pengujian handover sukses dilakukan oleh teman kelompok lain.
-   - **Susun Laporan PDF:** Masukkan semua screenshot dari Serina dan data penguji dari James ke format laporan Section A s/d I di bawah ini.
-   - Cetak laporan PDF-nya dan kumpulkan ke meja Pak Eka.
+#### 4. 👩‍💻 Areta — Documentation & Video Producer
+* **Tugas:** Menyempurnakan dokumen `README.md` (Runbook serah terima untuk orang awam) dan menyematkan link video demonstrasi.
+* **File yang di-commit:** `README.md`.
+* **Langkah di Laptop Areta:**
+  1. Pull branch terbaru:
+     ```bash
+     git checkout chore/dockerize-project
+     git pull origin chore/dockerize-project
+     ```
+  2. Buka `README.md`, lengkapi petunjuk langkah instalasi agar rapi dan mudah dibaca oleh tester luar.
+  3. Tambahkan section link video demo (YouTube Unlisted / GDrive).
+  4. Lakukan commit dan push dari akun GitHub Areta:
+     ```bash
+     git add README.md
+     git commit -m "docs(readme): polish handover runbook and video demonstration link"
+     git push origin chore/dockerize-project
+     ```
+* **Hasil di GitHub:** Akun Areta tercatat di GitHub Insights sebagai penanggung jawab dokumentasi dan DevEx.
+
+---
+
+#### 5. 👨‍💻 James — Handover & PR Coordinator
+* **Tugas:** Mengelola Pull Request, koordinasi tester luar, mencatat log handover, melakukan merge PR, dan membuat git release tag.
+* **File yang di-commit:** `HANDOVER_LOG.md`.
+* **Langkah di Laptop / Akun James:**
+  1. Buka GitHub, klik **Compare & pull request** dari `chore/dockerize-project` ke `main`.
+  2. Hubungi 1 teman dari kelompok lain, beri link repo untuk di-clone dan diuji di laptopnya.
+  3. Setelah tester luar sukses menguji, buat file `HANDOVER_LOG.md` berisi ringkasan nama tester, OS laptopnya, dan catatan hasil uji.
+  4. Commit dan push file log tersebut:
+     ```bash
+     git add HANDOVER_LOG.md
+     git commit -m "docs(handover): record external verification results from peer group"
+     git push origin chore/dockerize-project
+     ```
+  5. James melakukan approval & klik tombol **Merge pull request** di website GitHub (nama James tercatat sebagai *Merger*).
+  6. James membuat release tag di terminalnya:
+     ```bash
+     git checkout main
+     git pull origin main
+     git tag week6-docker-v1
+     git push origin week6-docker-v1
+     ```
+* **Hasil di GitHub:** Akun James tercatat di GitHub mengelola PR review, merge to main, dan tagging versi rilis.
 
 ---
 
