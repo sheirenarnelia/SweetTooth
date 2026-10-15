@@ -1,0 +1,7 @@
+services:
+  sweettooth-web:
+    build: .
+    container_name: sweettooth-app
+    ports:
+      - "${APP_PORT:-8080}:80"
+    restart: unless-stopped
