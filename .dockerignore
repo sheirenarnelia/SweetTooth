@@ -1,0 +1,12 @@
+.git
+.gitignore
+.DS_Store
+*/.DS_Store
+*.pdf
+.agents
+*.md
+.env
+.vscode/
+*.pptx
+*.zip
+*.log
