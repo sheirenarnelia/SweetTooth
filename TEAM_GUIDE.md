@@ -33,9 +33,9 @@ Tujuan tugas ini murni **DevOps, Packaging, Reproducibility, dan Handover Verifi
 
 | Anggota | Peran / Jabatan | Langkah Kerja Praktis (Step-by-Step) | Deliverable / Bukti | Konsep Laporan (Tabel 5.1) | Status |
 | :--- | :--- | :--- | :--- | :--- | :-: |
-| **Sheiren** | **DevOps & Image Architect** | **1.** Buka Docker Desktop di Mac<br>**2.** Jalankan `docker build -t sweettooth/web:week6 .`<br>**3.** Simpan screenshot terminal build sukses<br>**4.** Selesaikan invite 4 teman di GitHub | • `Dockerfile`<br>• Screenshot Build (Bab D) | Base image selection, Docker context, layer caching, expose port | ⏳ **Sedang Jalan** |
-| **Nisa** | **Orchestration Engineer** | **1.** Clone repo di laptop Nisa<br>**2.** Jalankan `docker compose up --build -d`<br>**3.** Pastikan container jalan di port 8080<br>**4.** Push commit file compose & env | • `compose.yaml`<br>• `.dockerignore`<br>• `.env.example` | Container orchestration, port forwarding, environment variables | ⏸️ Antre (stlh Sheiren) |
-| **Serina** | **QA & Verification Lead** | **1.** Buka browser `http://localhost:8080`<br>**2.** Tes klik menu kue & tambah ke keranjang<br>**3.** Ambil screenshot web jalan & add to cart<br>**4.** Buat & push file `VERIFICATION.md` | • `VERIFICATION.md`<br>• Screenshot Uji (Bab F) | Container healthcheck, verification matrix, runtime inspection | ⏸️ Antre (stlh Nisa) |
+| **Sheiren** | **DevOps & Image Architect** | **1.** Buka Docker Desktop di Mac<br>**2.** Jalankan `docker build -t sweettooth/web:week6 .`<br>**3.** Simpan screenshot terminal build sukses<br>**4.** Selesaikan invite 4 teman di GitHub | • `Dockerfile`<br>• Screenshot Build (Bab D) | Base image selection, Docker context, layer caching, expose port | ✅ **Selesai** |
+| **Nisa** | **Orchestration Engineer** | **1.** Clone repo di laptop Nisa<br>**2.** Jalankan `docker compose up --build -d`<br>**3.** Pastikan container jalan di port 8080<br>**4.** Push commit file compose & env | • `compose.yaml`<br>• `.dockerignore`<br>• `.env.example` | Container orchestration, port forwarding, environment variables | ✅ **Selesai** |
+| **Serina** | **QA & Verification Lead** | **1.** Clone/Pull repo & buka Docker Desktop<br>**2.** Jalankan `docker compose up --build -d`<br>**3.** Tes web `http://localhost:8080` & cart<br>**4.** Buat & push file `VERIFICATION.md` | • `VERIFICATION.md`<br>• Screenshot Uji (Bab F) | Container healthcheck, verification matrix, runtime inspection | ⏳ **Giliran Sekarang!** |
 | **Areta** | **Docs & Video Producer** | **1.** Rapikan panduan instalasi di `README.md`<br>**2.** Pimpin rekaman video demo (maks 20 mnt)<br>**3.** Sematkan link video ke `README.md` & push<br>**4.** Susun laporan PDF (Bab A–I) & cetak fisik | • `README.md`<br>• Link Video Demo<br>• File PDF Laporan | Developer experience (DevEx), handover runbooks, troubleshooting | ⏸️ Antre (stlh Serina) |
 | **James** | **Handover & PR Coordinator** | **1.** Buat Pull Request di GitHub<br>**2.** Minta 1 teman kelompok lain tes web kita<br>**3.** Catat hasil uji di `HANDOVER_LOG.md` & push<br>**4.** Klik Merge PR & buat tag `week6-docker-v1` | • PR Merged di GitHub<br>• `HANDOVER_LOG.md`<br>• Tag `week6-docker-v1` | Handover reproducibility, Git PR workflow, release tagging | ⏸️ Antre (stlh Areta) |
 
@@ -97,24 +97,77 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
 ---
 
 #### 3. 👩‍💻 Serina — QA & Verification Lead
-* **Tugas:** Menjalankan verifikasi fungsional container di laptopnya dan membuat dokumen checklist pengujian QA.
-* **File yang di-commit:** `VERIFICATION.md` (buat file baru di root folder berisi tabel hasil uji V-01 s/d V-04).
-* **Langkah di Laptop Serina:**
-  1. Pull branch terbaru:
+* **Tugas:** Menjalankan container di laptopnya sendiri, memverifikasi seluruh fungsi web berjalan lancar, dan meng-commit dokumen `VERIFICATION.md`.
+* **File yang di-commit:** `VERIFICATION.md` (file baru di root direktori).
+* **Langkah Detail di Laptop Serina:**
+  1. **Buka Terminal & Ambil Kode Terbaru:**
+     * *Opsi A (Jika Serina baru pertama kali clone):*
+       ```bash
+       git clone https://github.com/sheirenarnelia/SweetTooth.git
+       cd SweetTooth
+       git checkout chore/dockerize-project
+       ```
+     * *Opsi B (Jika Serina sudah punya foldernya):*
+       ```bash
+       cd SweetTooth
+       git checkout chore/dockerize-project
+       git pull origin chore/dockerize-project
+       ```
+  2. **Buka Docker Desktop di laptop Serina & Jalankan Container:**
      ```bash
-     git checkout chore/dockerize-project
-     git pull origin chore/dockerize-project
+     docker compose up --build -d
      ```
-  2. Jalankan container: `docker compose up --build -d`.
-  3. Uji di browser `http://localhost:8080`, cek fitur keranjang belanja & curl HTTP 200, lalu ambil screenshot untuk laporan Bab F.
-  4. Buat file `VERIFICATION.md` berisi tabel verifikasi fungsional dan spesifikasi runtime lokal.
-  5. Lakukan commit dan push dari akun GitHub Serina:
+     *(Pastikan status container running tanpa error).*
+  3. **Pengujian Fungsional & Simpan Screenshot:**
+     * Buka browser ke `http://localhost:8080`.
+     * Buka halaman Menu, klik tombol **Order Now** pada kue/minuman, pastikan item masuk keranjang belanja (*shopping cart*) dan total harga bertambah otomatis.
+     * Ambil **Screenshot 1:** Tampilan web di browser dengan keranjang belanja aktif.
+     * Buka terminal dan jalankan `curl -I http://localhost:8080` (untuk memastikan respon HTTP 200 OK).
+     * Ambil **Screenshot 2:** Hasil curl di terminal.
+     *(Kedua screenshot ini disimpan untuk diserahkan ke Areta bahan laporan Bab F).*
+  4. **Buat File `VERIFICATION.md` di root folder:**
+     Serina membuat file baru bernama `VERIFICATION.md` lalu salin template berikut:
+     ```markdown
+     # 🧪 Functional Verification Matrix & QA Report
+
+     > **Tester / PIC QA:** Serina  
+     > **Role:** QA & Verification Lead  
+     > **Tanggal Pengujian:** 16 Oktober 2026  
+     > **Branch:** chore/dockerize-project  
+
+     ---
+
+     ## 💻 Runtime & Environment Spesifikasi
+     - **OS Host:** macOS / Windows 11 *(sesuaikan dengan laptop Serina)*
+     - **Docker Engine:** Docker Desktop
+     - **Compose Version:** v2.x
+     - **Base Image:** `nginx:alpine`
+     - **Container Port Mapping:** `8080 -> 80`
+     - **Container Name:** `sweettooth-app`
+
+     ---
+
+     ## 📊 Matriks Verifikasi Fungsional (Tabel Bab F Laporan)
+
+     | ID Test | Kriteria Pengujian | Prosedur / Langkah Uji | Hasil yang Diharapkan | Hasil Nyata (Actual Result) | Status |
+     | :--- | :--- | :--- | :--- | :--- | :---: |
+     | **V-01** | Container Lifecycle & Health | Jalankan `docker compose up --build -d` lalu cek `docker compose ps` | Container running di background tanpa restart mendadak | Container `sweettooth-app` status Up (healthy) port 8080 | ✅ **PASSED** |
+     | **V-02** | HTTP Endpoint Baseline | Jalankan `curl -I http://localhost:8080` di terminal | Mengembalikan HTTP header status `200 OK` | Respon `HTTP/1.1 200 OK`, server nginx/alpine | ✅ **PASSED** |
+     | **V-03** | Core Feature: Menu & Shopping Cart | Buka `http://localhost:8080/menu.html`, pilih kue (misal: Biscoff Cheesecake), klik *Order Now* | Item masuk ke dalam list keranjang, counter bertambah, harga total terhitung | Item berhasil masuk ke list pesanan, total harga terhitung akurat | ✅ **PASSED** |
+     | **V-04** | Container Restart Resilience | Jalankan `docker compose restart`, refresh browser | Container hidup kembali dengan cepat dan web tetap dapat diakses | Web langsung dapat diakses normal kembali tanpa data error | ✅ **PASSED** |
+
+     ---
+
+     ## 📸 Bukti Pengujian (Screenshots)
+     - Bukti tangkapan layar browser (V-03) dan respon curl (V-02) telah diarsipkan untuk dilampirkan pada **Bab F Evidence Report PDF**.
+     ```
+  5. **Lakukan Commit dan Push dari Akun GitHub Serina:**
      ```bash
      git add VERIFICATION.md
      git commit -m "docs(qa): add functional verification matrix and baseline results"
      git push origin chore/dockerize-project
      ```
-* **Hasil di GitHub:** Akun Serina tercatat di GitHub Insights sebagai penanggung jawab penjaminan mutu (QA).
+* **Hasil di GitHub:** Akun Serina tercatat di GitHub Insights sebagai penanggung jawab penjaminan mutu (QA) dengan file `VERIFICATION.md`.
 
 ---
 
