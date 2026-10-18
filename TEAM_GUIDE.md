@@ -35,8 +35,8 @@ Tujuan tugas ini murni **DevOps, Packaging, Reproducibility, dan Handover Verifi
 | :--- | :--- | :--- | :--- | :--- | :-: |
 | **Sheiren** | **DevOps & Image Architect** | **1.** Buka Docker Desktop di Mac<br>**2.** Jalankan `docker build -t sweettooth/web:week6 .`<br>**3.** Simpan screenshot terminal build sukses<br>**4.** Selesaikan invite 4 teman di GitHub | • `Dockerfile`<br>• Screenshot Build (Bab D) | Base image selection, Docker context, layer caching, expose port | ✅ **Selesai** |
 | **Nisa** | **Orchestration Engineer** | **1.** Clone repo di laptop Nisa<br>**2.** Jalankan `docker compose up --build -d`<br>**3.** Pastikan container jalan di port 8080<br>**4.** Push commit file compose & env | • `compose.yaml`<br>• `.dockerignore`<br>• `.env.example` | Container orchestration, port forwarding, environment variables | ✅ **Selesai** |
-| **Serina** | **QA & Verification Lead** | **1.** Clone/Pull repo & buka Docker Desktop<br>**2.** Jalankan `docker compose up --build -d`<br>**3.** Tes web `http://localhost:8080` & cart<br>**4.** Buat & push file `VERIFICATION.md` | • `VERIFICATION.md`<br>• Screenshot Uji (Bab F) | Container healthcheck, verification matrix, runtime inspection | ⏳ **Giliran Sekarang!** |
-| **Areta** | **Docs & Video Producer** | **1.** Rapikan panduan instalasi di `README.md`<br>**2.** Pimpin rekaman video demo (maks 20 mnt)<br>**3.** Sematkan link video ke `README.md` & push<br>**4.** Susun laporan PDF (Bab A–I) & cetak fisik | • `README.md`<br>• Link Video Demo<br>• File PDF Laporan | Developer experience (DevEx), handover runbooks, troubleshooting | ⏸️ Antre (stlh Serina) |
+| **Serina** | **QA & Verification Lead** | **1.** Clone/Pull repo & buka Docker Desktop<br>**2.** Jalankan `docker compose up --build -d`<br>**3.** Tes web `http://localhost:8080` & cart<br>**4.** Buat & push file `VERIFICATION.md` | • `VERIFICATION.md`<br>• Screenshot Uji (Bab F) | Container healthcheck, verification matrix, runtime inspection | ✅ **Selesai** |
+| **Areta** | **Docs & Video Producer** | **1.** Rapikan panduan instalasi di `README.md`<br>**2.** Pimpin rekaman video demo (maks 20 mnt)<br>**3.** Sematkan link video ke `README.md` & push<br>**4.** Susun laporan PDF (Bab A–I) & cetak fisik | • `README.md`<br>• Link Video Demo<br>• File PDF Laporan | Developer experience (DevEx), handover runbooks, troubleshooting | ⏳ **Giliran Sekarang!** |
 | **James** | **Handover & PR Coordinator** | **1.** Buat Pull Request di GitHub<br>**2.** Minta 1 teman kelompok lain tes web kita<br>**3.** Catat hasil uji di `HANDOVER_LOG.md` & push<br>**4.** Klik Merge PR & buat tag `week6-docker-v1` | • PR Merged di GitHub<br>• `HANDOVER_LOG.md`<br>• Tag `week6-docker-v1` | Handover reproducibility, Git PR workflow, release tagging | ⏸️ Antre (stlh Areta) |
 
 ---
@@ -97,6 +97,7 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
 ---
 
 #### 3. 👩‍💻 Serina — QA & Verification Lead
+* **Status:** ✅ **Selesai** (Commit `9ce0dca` — `VERIFICATION.md` dan screenshot bukti uji di folder `evidence/` telah di-push ke branch).
 * **Tugas:** Menjalankan container di laptopnya sendiri, memverifikasi seluruh fungsi web berjalan lancar, dan meng-commit dokumen `VERIFICATION.md`.
 * **File yang di-commit:** `VERIFICATION.md` (file baru di root direktori).
 * **Langkah Detail di Laptop Serina:**
@@ -172,6 +173,7 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
 ---
 
 #### 4. 👩‍💻 Areta — Documentation & Video Producer
+* **Status:** ⏳ **Giliran Sekarang** (Menyempurnakan `README.md`, video demo tim, dan penyusunan laporan PDF Bab A–I).
 * **Tugas:** Menyempurnakan dokumen `README.md` (Runbook serah terima untuk orang awam) dan menyematkan link video demonstrasi.
 * **File yang di-commit:** `README.md`.
 * **Langkah di Laptop Areta:**
@@ -220,11 +222,11 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
 ## 🗺️ ROADMAP 12 LANGKAH KERJA
 
 ### 📌 Fase 1: Persiapan & Baseline (Hari ke-1)
-- [ ] **Step 1: Baseline Lokal (PIC: Serina)**
+- [x] **Step 1: Baseline Lokal (PIC: Serina)**
   - Jalankan Sweet Tooth langsung di browser (tanpa Docker).
   - Ambil screenshot: Halaman Home, Halaman Menu, Fitur Tambah ke Keranjang.
   - Catat detail baseline: Teknologi (HTML5, CSS3, JavaScript/jQuery, Bootstrap 5), Web server lokal, Port standar.
-- [ ] **Step 2: Git Branching (PIC: Sheiren)**
+- [x] **Step 2: Git Branching (PIC: Sheiren)**
   - Pastikan branch `main` bersih.
   - Buat branch baru:
     ```bash
@@ -235,7 +237,7 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
 ---
 
 ### 📌 Fase 2: Dockerisasi Aplikasi (Hari ke-1 s/d 2)
-- [ ] **Step 3 & 4: Runtime & Dockerfile (PIC: Sheiren)**
+- [x] **Step 3 & 4: Runtime & Dockerfile (PIC: Sheiren)**
   - Base runtime: `nginx:alpine` (ringan, ~25MB, resmi, aman).
   - Buat file `Dockerfile` di root folder:
     ```dockerfile
@@ -247,20 +249,20 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
     CMD ["nginx", "-g", "daemon off;"]
     ```
   - Lakukan commit di branch tugas.
-- [ ] **Step 5: File .dockerignore & .env.example (PIC: Nisa)**
+- [x] **Step 5: File .dockerignore & .env.example (PIC: Nisa)**
   - Buat `.dockerignore` agar file `.git`, PDF, dan screenshot tidak ikut ter-copy ke dalam image.
   - Buat `.env.example` untuk dokumentasi port standar:
     ```env
     APP_PORT=8080
     CONTAINER_PORT=80
     ```
-- [ ] **Step 6: Build & Tag Image (PIC: Sheiren)**
+- [x] **Step 6: Build & Tag Image (PIC: Sheiren)**
   - Jalankan build:
     ```bash
     docker build -t sweettooth/web:week6 .
     ```
   - Verifikasi: `docker image ls` (simpan screenshot hasil output berhasil).
-- [ ] **Step 7: Docker Compose Setup (PIC: Nisa)**
+- [x] **Step 7: Docker Compose Setup (PIC: Nisa)**
   - Buat file `compose.yaml`:
     ```yaml
     services:
@@ -277,12 +279,12 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
 ---
 
 ### 📌 Fase 3: Verifikasi & Troubleshooting (Hari ke-3)
-- [ ] **Step 8: Inspect & Diagnostic (PIC: Serina & Nisa)**
+- [x] **Step 8: Inspect & Diagnostic (PIC: Serina & Nisa)**
   - Jalankan dan ambil screenshot output dari:
     - `docker compose ps`
     - `docker compose logs`
     - `docker inspect sweettooth-app`
-- [ ] **Step 9: Functional Verification (PIC: Serina)**
+- [x] **Step 9: Functional Verification (PIC: Serina)**
   - Uji minimal 3 fitur di browser via `http://localhost:8080`:
     - **V-01:** Container status running.
     - **V-02:** Health endpoint / HTTP 200 via `curl -I http://localhost:8080`.
