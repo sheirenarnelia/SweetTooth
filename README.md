@@ -1,125 +1,145 @@
-# 🍰 Sweet Tooth — Dessert Ordering Web App
+# 🍰 Sweet Tooth: Dessert Ordering Web App
 
-> **DevOps Handover Guide — Week 6 Assignment**  
-> *"Move beyond 'it works on my laptop.' Make it reproducible for another person."*
+A dessert ordering website built with HTML5, CSS3, JavaScript/jQuery, and Bootstrap 5.
 
-Selamat datang di repositori **Sweet Tooth**! Dokumen ini dibuat agar siapa pun (termasuk teman penguji dari kelompok lain) dapat menjalankan aplikasi ini di laptop masing-masing dengan mudah hanya menggunakan Docker.
+**Main feature:** browse the dessert menu, add items to the cart, and see the total price update.
 
----
-
-## 📌 Prasyarat (Prerequisites)
-Pastikan laptop Anda sudah terinstall:
-- **Git** ([Download Git](https://git-scm.com/))
-- **Docker Desktop** yang sudah dalam keadaan menyala (*Running*) ([Download Docker](https://www.docker.com/products/docker-desktop/))
-- Web Browser (Chrome / Edge / Safari / Firefox)
+This guide lets anyone run the app on their own laptop using only Docker. You don't need to install a web server or any other tools.
 
 ---
 
-## 🚀 Panduan Menjalankan Aplikasi (Hanya 5 Langkah!)
+## What You Need
 
-Ikuti 5 langkah berurutan di bawah ini di terminal Anda:
+- **Git**: https://git-scm.com/
+- **Docker Desktop**, installed and **running**: https://www.docker.com/products/docker-desktop/
+- A web browser
+- Port **8080** free on your computer
 
-### Langkah 1: Clone Repository
-Unduh repository ini ke laptop Anda:
+**Tested with:** Docker `___` and Docker Compose `___`
+**Tested on:** Windows 11 (PowerShell) and macOS
+
+---
+
+## Quick Start
+
 ```bash
-git clone https://github.com/sheirenarnelia/SweetTooth.git
-cd "SweetTooth Project 2"
+git clone -b chore/dockerize-project https://github.com/sheirenarnelia/SweetTooth.git
+cd SweetTooth
+cp .env.example .env
+docker compose up --build -d
 ```
 
----
+Then open **http://localhost:8080**.
 
-### Langkah 2: Siapkan File Konfigurasi (.env)
-Salin template konfigurasi bawaan (tidak ada password rahasia):
-* **Pengguna Mac / Linux:**
-  ```bash
-  cp .env.example .env
-  ```
-* **Pengguna Windows (PowerShell):**
-  ```powershell
-  copy .env.example .env
-  ```
+*(Windows PowerShell: use `copy .env.example .env` instead of `cp`.)*
+
+The detailed steps are below.
 
 ---
 
-### Langkah 3: Jalankan Aplikasi dengan Docker
-Jalankan perintah ini untuk otomatis mem-build image dan menyalakan container di latar belakang:
+## Step-by-Step Guide
+
+### Step 1: Clone the repository
+```bash
+git clone -b chore/dockerize-project https://github.com/sheirenarnelia/SweetTooth.git
+cd SweetTooth
+```
+
+### Step 2: Create your settings file
+This copies the sample settings. It contains no secrets.
+
+- **Mac / Linux:** `cp .env.example .env`
+- **Windows (PowerShell):** `copy .env.example .env`
+
+| Variable | What it means | Default |
+| :--- | :--- | :--- |
+| `APP_PORT` | The port on your laptop | `8080` |
+| `CONTAINER_PORT` | For reference only. The container always uses port 80 | `80` |
+
+### Step 3: Build and start the app
 ```bash
 docker compose up --build -d
 ```
-> ⏱️ *Tunggu beberapa detik sampai muncul tulisan `Started`.*
+The first run takes about a minute. When it finishes, you should see:
+```
+Container sweettooth-app   Started
+```
 
----
+### Step 4: Open the app
+Go to **http://localhost:8080**. You should see the Sweet Tooth home page.
 
-### Langkah 4: Buka Aplikasi di Browser
-Setelah container menyala, buka browser dan akses tautan berikut:
+| | Port |
+| :--- | :---: |
+| Your laptop (host) | `8080` |
+| Inside the container | `80` (Nginx) |
 
-👉 **[http://localhost:8085](http://localhost:8085)**  
-*(Jika port 8085 tidak bisa, cek file `.env` untuk melihat port yang aktif).*
-
-**Informasi Port:**
-* **Host Port (Laptop Anda):** `8085`
-* **Container Port:** `80` (Nginx Web Server)
-
----
-
-### Langkah 5: Matikan Aplikasi (Jika Sudah Selesai)
-Setelah selesai mencoba dan mengambil bukti screenshot, matikan container dengan perintah:
+### Step 5: Stop the app
 ```bash
 docker compose down
 ```
+You should see the container and network being removed.
 
 ---
 
-## 🧪 Tabel Verifikasi Pengujian (Untuk Handover Tester)
+## How to Check That It Works
 
-Bagi teman kelompok lain yang menguji, silakan lakukan 3 pengujian berikut untuk memastikan aplikasi berjalan normal:
-
-| No | Pengujian | Cara Cek | Hasil yang Diharapkan |
+| ID | Check | How | Expected result |
 | :---: | :--- | :--- | :--- |
-| **V-01** | **Cek Status Container** | Ketik di terminal: `docker compose ps` | Status container bertuliskan `Up`. |
-| **V-02** | **Cek Akses Web** | Buka browser: `http://localhost:8085` | Halaman Home *Sweet Tooth* muncul dengan rapi. |
-| **V-03** | **Cek Fitur Utama (Menu & Keranjang)** | Klik menu **Our Menu**, lalu klik tombol **Order Now** pada salah satu kue. | Jumlah kue dan total harga pada keranjang belanja bertambah secara otomatis. |
-| **V-04** | **Cek Restart Container** | Ketik: `docker compose restart` | Container restart dengan mulus tanpa error. |
+| **V-01** | Container is running | `docker compose ps` | Status shows `Up` |
+| **V-02** | Website responds | `curl -I http://localhost:8080` | `HTTP/1.1 200 OK` |
+| **V-03** | Main feature works | Open **Our Menu**, click **Order Now** on a dessert | The cart count and total price go up |
+| **V-04** | Restart works | `docker compose restart`, then reload the page | Container comes back as `Up`, and the site still opens |
 
 ---
 
-## 🔍 Perintah Tambahan untuk Pengecekan (Opsional)
+## Useful Commands
 
-Jika ingin melihat log atau detail container:
-* **Melihat status container:**
-  ```bash
-  docker compose ps
-  ```
-* **Melihat catatan log:**
-  ```bash
-  docker compose logs
-  ```
-* **Melihat live logs:**
-  ```bash
-  docker compose logs -f sweettooth-web
-  ```
+| Goal | Command |
+| :--- | :--- |
+| See container status | `docker compose ps` |
+| See all logs | `docker compose logs` |
+| Follow logs live (Ctrl+C to exit) | `docker compose logs -f sweettooth-web` |
+| Stop and clean up | `docker compose down` |
 
 ---
 
-## 🛠️ Panduan Mengatasi Kendala (Troubleshooting)
+## What's in the Docker Setup
 
-### 1. Muncul error `port is already allocated` atau `bind: address already in use`
-* **Penyebab:** Port `8085` sedang dipakai oleh aplikasi lain di laptop Anda.
-* **Solusi:** Buka file `.env`, ubah baris `APP_PORT=8085` menjadi port lain (misalnya `APP_PORT=8088` atau `APP_PORT=3000`), lalu jalankan kembali `docker compose up -d`.
-
-### 2. Tampilan gambar/tombol di browser tidak ter-update
-* **Penyebab:** Cache browser lama masih tersimpan.
-* **Solusi:** Lakukan *Hard Reload* di browser dengan menekan tombol **Ctrl + Shift + R** (Windows) atau **Cmd + Shift + R** (Mac).
-
-### 3. Error `Cannot connect to the Docker daemon`
-* **Penyebab:** Aplikasi Docker Desktop di laptop Anda belum dibuka/belum menyala.
-* **Solusi:** Buka aplikasi Docker Desktop dan pastikan ikon Docker di taskbar/menu bar sudah berwarna hijau/aktif.
+| File | What it does |
+| :--- | :--- |
+| `Dockerfile` | Packages the website into an Nginx Alpine image |
+| `compose.yaml` | Starts the app with one command and sets the port |
+| `.dockerignore` | Keeps junk files (Git data, PDFs, screenshots) out of the image |
+| `.env.example` | Sample settings. Copy it to `.env` |
 
 ---
 
-## 👥 Informasi Proyek & Repositori
-* **Mata Kuliah:** Information Systems Agile Project Management with DevOps (IS 2026)
-* **Dosen:** Eka Parima Saragih, S.Kom., M.Kom.
-* **Repository:** [https://github.com/sheirenarnelia/SweetTooth.git](https://github.com/sheirenarnelia/SweetTooth.git)
-* **Branch:** `chore/dockerize-project` (merged into `main`)
-* **Release Tag:** `week6-docker-v1`
+## Troubleshooting
+
+**`port is already allocated` or `address already in use`**
+Another program is using port 8080. Open `.env`, change `APP_PORT=8080` to another number (for example `8081`), and run `docker compose up -d` again. Then open `http://localhost:8081` instead.
+
+**The page looks old or changes don't show**
+Your browser saved an old copy. Hard reload with **Ctrl + Shift + R** (Windows) or **Cmd + Shift + R** (Mac).
+
+**`Cannot connect to the Docker daemon`**
+Docker Desktop isn't running. Open it, wait until it says it's running, then try again.
+
+**The page doesn't open at all**
+Run `docker compose ps`. If the container isn't `Up`, run `docker compose logs` and read the first error message.
+
+---
+
+## Known Limitations
+
+- This is a static website with no database. The cart is not saved on a server.
+- The browser may show a harmless `favicon.ico` 404 message in the logs because the site has no favicon file.
+
+---
+
+## Project Info
+
+- **Course:** Information Systems Agile Project Management with DevOps (IS 2026)
+- **Lecturer:** Eka Parima Saragih, S.Kom., M.Kom.
+- **Repository:** https://github.com/sheirenarnelia/SweetTooth
+- **Branch:** `chore/dockerize-project`
