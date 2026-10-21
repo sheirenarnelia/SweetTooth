@@ -1,7 +1,7 @@
 # Functional Verification Matrix & QA Report
 
 **Project:** SweetTooth  
-**Tester:** Serina  
+**Tester:** Naw Ngone Thitsar 
 **Role:** QA & Verification Lead  
 **Date:** 17 October 2026  
 **Git Branch:** `chore/dockerize-project`
