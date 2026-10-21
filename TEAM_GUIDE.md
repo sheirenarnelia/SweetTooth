@@ -173,7 +173,7 @@ Agar tidak bingung "siapa harus commit apa", berikut rincian pasti tugas file da
 ---
 
 #### 4. 👩‍💻 Areta — Documentation & Video Producer
-* **Status:** ⏳ **Giliran Sekarang** (Menyempurnakan `README.md`, video demo tim, dan penyusunan laporan PDF Bab A–I).
+* **Status:* ✅ Selesai (Menyempurnakan `README.md`, video demo tim, dan penyusunan laporan PDF Bab A–I).
 * **Tugas:** Menyempurnakan dokumen `README.md` (Runbook serah terima untuk orang awam) dan menyematkan link video demonstrasi.
 * **File yang di-commit:** `README.md`.
 * **Langkah di Laptop Areta:**
