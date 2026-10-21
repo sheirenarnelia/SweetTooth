@@ -73,12 +73,18 @@ Go to **http://localhost:8080**. You should see the Sweet Tooth home page.
 | Your laptop (host) | `8080` |
 | Inside the container | `80` (Nginx) |
 
-### Step 5: Stop the app
+### Step 5: Stop and clean up
+
+Stop the app and remove its container and network:
 ```bash
 docker compose down
 ```
 You should see the container and network being removed.
 
+(Optional) Also delete the built image to free disk space:
+```bash
+docker compose down --rmi local
+```
 ---
 
 ## How to Check That It Works
