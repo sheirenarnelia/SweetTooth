@@ -181,9 +181,9 @@ ports:
   - "${APP_PORT:-8080}:${CONTAINER_PORT:-80}"
 ```
 
-This mapping uses port `8080` on the host and port `80` inside the container by default.
+Docker Compose uses `APP_PORT` to configure the host port and `CONTAINER_PORT` to configure the container port. By default, the application is available at `http://localhost:8080`, with host port `8080` mapped to container port `80`.
 
-If port `8080` is already in use, change `APP_PORT` in your `.env` file to another available port, such as `8081`. Recreate the container using:
+If you change either variable in `.env`, Docker Compose uses the updated value when recreating the container. The container port must match the port on which Nginx listens. If port `8080` is already in use, change `APP_PORT` in your `.env` file to another available port, such as `8081`. Recreate the container using:
 
 ```bash
 docker compose up --build -d
