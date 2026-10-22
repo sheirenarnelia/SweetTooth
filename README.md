@@ -76,20 +76,20 @@ If Docker displays system information without a daemon connection error, continu
 
 ### Docker Versions
 
-Docker Engine and Docker Compose versions can differ depending on the operating system and Docker Desktop release.
+The following versions were used to test this project on an Apple Silicon Mac:
 
-Check the installed versions with:
+- **Operating System:** macOS (Apple Silicon)
+- **Docker Engine:** 29.9.1, build dfc520d
+- **Docker Compose:** v5.6.0
+
+To check the versions installed on your computer, run:
 
 ```bash
 docker --version
 docker compose version
 ```
 
-**Tested environment:** Record the exact versions used when testing this project.
-
-- Operating system: macOS  (Apple Silicon)
-- Docker Engine:  29.9.1, build dfc520d
-- Docker Compose: v5.6.0
+Make sure Docker Desktop is running before executing Docker commands.
   
 ---
 
@@ -144,30 +144,60 @@ You should see the Sweet Tooth home page.
 
 ## Environment Configuration
 
-The `.env.example` file provides sample configuration values. Copy it to `.env` before starting the application.
+Before starting the application, create a local `.env` file from the provided `.env.example` template.
 
-Example configuration:
+**macOS / Linux:**
+
+```bash
+cp .env.example .env
+```
+
+**Windows PowerShell:**
+
+```powershell
+Copy-Item .env.example .env
+```
+
+### Environment Variables
+
+The `.env.example` file should contain the following configuration:
 
 ```dotenv
 APP_PORT=8080
 CONTAINER_PORT=80
 ```
 
-| Variable | Purpose | Default |
+| Variable | Description | Default |
 |---|---|---|
-| `APP_PORT` | Host port used to access the website from your computer | `8080` |
-| `CONTAINER_PORT` | Reference value for the web server's container port | `80` |
+| `APP_PORT` | Host port used to access the website | `8080` |
+| `CONTAINER_PORT` | Port used by Nginx inside the container | `80` |
 
-The container's Nginx web server listens on port `80`. Docker Compose defines how the host port maps to the container port.
+The application is accessed through `http://localhost:8080` by default. Docker Compose maps the host port to the container port, where Nginx serves the static website.
 
-**Important:** The actual behavior of these variables depends on how they are referenced in `compose.yaml`. In particular, changing `CONTAINER_PORT` will only affect the port mapping if the Compose configuration uses that variable.
+The variables must be referenced in `compose.yaml` for changes to take effect. For example:
+
+```yaml
+ports:
+  - "${APP_PORT:-8080}:${CONTAINER_PORT:-80}"
+```
+
+This mapping uses port `8080` on the host and port `80` inside the container by default.
+
+If port `8080` is already in use, change `APP_PORT` in your `.env` file to another available port, such as `8081`. Recreate the container using:
+
+```bash
+docker compose up --build -d
+```
+
+Then access the website at `http://localhost:8081`.
 
 ### Environment File Safety
 
-- Commit `.env.example` to the repository as a safe configuration template.
-- Keep machine-specific settings in `.env`.
-- Do not put passwords, API keys, access tokens, or other real secrets in `.env.example`.
-- If `.env` contains private information, do not commit it to Git.
+- Commit `.env.example` to the repository as a configuration template.
+- Keep local configuration in `.env`.
+- Never put real passwords, API keys, access tokens, or other secrets in `.env.example`.
+- Add `.env` to `.gitignore` to prevent accidental commits of local configuration.
+- Do not commit `.env` if it contains private information.
 
 ---
 
