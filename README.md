@@ -15,12 +15,12 @@ This guide lets anyone run the app on their own laptop using only Docker. You do
 - A web browser
 - Port **8080** free on your computer
 
-**Tested with:** Docker `___` and Docker Compose `___`
+**Tested with:** Docker `___` and Docker Compose (so make sure you have the docker app first!) `___`
 **Tested on:** Windows 11 (PowerShell) and macOS
 
 ---
 
-## Quick Start
+## Quick Start 
 
 ```bash
 git clone -b chore/dockerize-project https://github.com/sheirenarnelia/SweetTooth.git
@@ -46,7 +46,7 @@ cd SweetTooth
 ```
 
 ### Step 2: Create your settings file
-This copies the sample settings. It contains no secrets.
+This copies the sample settings. It contains no secrets. Write this on terminal to duplicate the file config, or you can do copy-paste method in your source code software (for example: VS CODE)
 
 - **Mac / Linux:** `cp .env.example .env`
 - **Windows (PowerShell):** `copy .env.example .env`
@@ -134,6 +134,8 @@ Docker Desktop isn't running. Open it, wait until it says it's running, then try
 **The page doesn't open at all**
 Run `docker compose ps`. If the container isn't `Up`, run `docker compose logs` and read the first error message.
 
+
+
 ---
 
 ## Known Limitations
@@ -146,6 +148,6 @@ Run `docker compose ps`. If the container isn't `Up`, run `docker compose logs` 
 ## Project Info
 
 - **Course:** Information Systems Agile Project Management with DevOps (IS 2026)
-- **Lecturer:** Eka Parima Saragih, S.Kom., M.Kom.
+- **Lecturer:** Anggraini Dyah Ayu Sekarlangit, B.Sc., M.Sc
 - **Repository:** https://github.com/sheirenarnelia/SweetTooth
 - **Branch:** `chore/dockerize-project`
