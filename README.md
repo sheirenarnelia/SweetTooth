@@ -300,7 +300,7 @@ Review the first relevant error message and verify that the configured host port
 - **Lecturer:** Anggraini Dyah Ayu Sekarlangit, B.Sc., M.Sc.
 - **Repository:** https://github.com/sheirenarnelia/SweetTooth
 - **Branch:** `chore/dockerize-project`
-
+GOOD LUCK! 
 ---
 
 **End of README**
